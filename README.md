@@ -7,7 +7,7 @@ This package contains some configuration files that will help you to simulate an
 
 ## Installation
 
-**Note: Currently only ROS Hydro is supported ** 
+*Note: Currently only ROS Hydro is supported*
 
 We assume you have successfully installed ROS and set-up a Catkin workspace. Check out the following packages in your workspace:
 
@@ -54,14 +54,14 @@ To visualize both the robot and the ED world, run:
 
     rviz-amigo
 
-This command is defined in './setup/setup.bash'. The rviz configuration can be found in './config/rviz/amigo_ed.rviz'. The colored blocks / objects represent the world as it is currently stored in ED. You can display the Kinect point cloud by ticking the box behind 'Cam - Head Point Cloud'.
+This command is defined in *./setup/setup.bash*. The rviz configuration can be found in *./config/rviz/amigo_ed.rviz*. The colored blocks / objects represent the world as it is currently stored in ED. You can display the Kinect point cloud by ticking the box behind *Cam - Head Point Cloud*.
 
 You can navigate the robot with the keyboard by running:
 
-   amigo-teleop
+    amigo-teleop
 
 Use the numpad to drive around amigo. Use '/' and '*' to rotate.
 
-Drive around AMIGO while paying attention to RViz. The simulated world and the prior world loaded in ED are nearly identical, so the robot won't discover many 'new' things. There are however some small items in the simulated world that ED does not yet know about. Try driving around until you find them. They should be displayed in RViz as colored 3D polygons.
+Drive around AMIGO while paying attention to RViz. The simulated world and the prior world loaded in ED are nearly identical, so the robot won't discover many *new* things. There are however some small items in the simulated world that ED does not yet know about. Try driving around until you find them. They should be displayed in RViz as colored 3D polygons.
 
 
