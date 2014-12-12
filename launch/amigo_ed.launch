@@ -1,71 +1,41 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!--
-        Starts the basic functionalities of the robot:
-          - Robot model
-          - Sensors
-          - Self filtering
-          - Diagnostics
-          - Text to speech
-    -->
+    <!-- Name of the environment to load (must correspond to a model in 'ed_object_models' -->
+    <arg name="env" default="robotics_testlabs" />
 
-    <arg name="gui" default="true"/>
-
-    <arg name="env" default="$(optenv ROBOT_ENV robotics_testlab_A)" />
-
-    <arg name="ROBOT_REAL" default="$(optenv ROBOT_REAL false)" />
-    <arg name="ROBOT_COMPLEXITY" default="$(optenv ROBOT_COMPLEXITY complex)" />
-    
-    <arg name="robot_name" default="amigo"/>
-
-    <!-- Used by fast_simulator: set to true to instantly move to goals while navigating -->
-    <arg name="teleport" default="false"/>    
-    <arg name="kinect_raytracing" default="true"/>
-
-    <!-- load robot -->
+    <!-- Initial position of the robot -->
+    <arg name="robot_init_x"   default="0.586"/>
+    <arg name="robot_init_y"   default="4.259"/>
+    <arg name="robot_init_phi" default="0"/>
+  
+    <!-- load robot description -->
     <param name="/amigo/robot_description" textfile="$(find amigo_description)/urdf/amigo.urdf" />
 
-    <!-- load robot joint group info -->
-    <rosparam file="$(find amigo_description)/custom/joint_groups.yaml" command="load" />
-    
-    <!-- Load robot specific skill parameters -->
-    <rosparam file="$(find amigo_description)/custom/skills.yaml" command="load" ns="/$(arg robot_name)/skills"/>
+    <!-- start simulator -->
+    <node name="fast_simulator" pkg="fast_simulator" type="simulator" args="--model-dir $(find fast_simulator_data)" output="screen"/>
 
-    <!-- DIAGNOSTICS -->
+    <!-- spawn world -->
+    <node pkg="fast_simulator" type="spawn" name="spawn_world" args="-i $(arg env) -m $(arg env)" output="screen"/>
 
+    <!-- spawn objects -->
+    <node name="fast_simulator_object_spawner" pkg="fast_simulator_data" type="$(arg env).py" output="screen"/>
 
-    <group if="$(arg ROBOT_REAL)">
-        <!-- REAL ROBOT -->
+    <!-- spawn amigo -->
+    <node pkg="fast_simulator" type="spawn" name="spawn_amigo" args="-i amigo -m amigo -x $(arg robot_init_x) -y $(arg robot_init_y) -Z $(arg robot_init_phi)" output="screen"/>
 
-        <!-- Robot state publisher -->
-        <node pkg="robot_state_publisher" type="state_publisher" name="$(arg robot_name)_state_publisher" ns="$(arg robot_name)">
-            <param name="publish_frequency" type="double" value="50.0" />
-			<param name="tf_prefix" type="string" value="/$(arg robot_name)" />
-            <remap from="joint_states" to="/$(arg robot_name)/joint_states"/>
-        </node>
+    <!-- Robot state publisher: publishes TFs -->
+    <node pkg="robot_state_publisher" type="state_publisher" name="amigo_state_publisher" ns="amigo">
+        <param name="publish_frequency" type="double" value="50.0" />
+        <param name="tf_prefix" type="string" value="amigo" />
+        <remap from="joint_states" to="/amigo/joint_states"/>
+    </node>
 
-        <!-- RGB lights manager -->
-        <node name="rgb_lights_manager" pkg="rgb_lights_manager" type="rgb_lights_manager" output="screen">
-            <remap from="/hardware_status" to="/amigo/hardware_status" />
-            <remap from="/emergency_switch" to="/amigo/emergency_switch" />
-        </node>
-
-        <!-- Top kinect recorder -->
-        <include file="$(find amigo_launch_files)/launch/recording/rec_amigo_top_kinect.launch"/>
-    </group>
-
-    <group unless="$(arg ROBOT_REAL)">
-        <!-- SIMULATION -->
-        <include file="$(find amigo_launch_files)/launch/simulator/fast_simulator.launch">
-            <arg name="gui" value="$(arg gui)"/>
-            <arg name="env" value="$(arg env)"/>
-            <arg name="teleport" value="$(arg teleport)"/>
-            <arg name="kinect_raytracing" value="$(arg kinect_raytracing)"/>
-        </include>     
-    </group>
-
+    <!-- fake localization -->
     <node pkg="tf" type="static_transform_publisher" name="tf_fake_localization" args="0 0 0 0 0 0 /map /amigo/odom 20" />
+
+    <!-- Run ED -->
+    <node name="ed_server" pkg="ed" type="ed_server" args="$(find amigo_ed_tutorials)/config/ed/segmentation.yaml" output="screen" />
  		
  </launch>
   
