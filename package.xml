@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <name>amigo_ed_tutorials</name>
+  <version>0.0.0</version>
+  <description>No description available</description>
+
+  <maintainer email="todo@tue.nl">todo</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>fast_simulator</build_depend>
+  <run_depend>fast_simulator</run_depend>
+
+  <build_depend>fast_simulator_data</build_depend>
+  <run_depend>fast_simulator_data</run_depend>
+
+  <build_depend>amigo_description</build_depend>
+  <run_depend>amigo_description</run_depend>
+
+</package>
