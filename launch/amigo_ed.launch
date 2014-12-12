@@ -19,7 +19,7 @@
     <node pkg="fast_simulator" type="spawn" name="spawn_world" args="-i $(arg env) -m $(arg env)" output="screen"/>
 
     <!-- spawn objects -->
-    <node name="fast_simulator_object_spawner" pkg="fast_simulator_data" type="$(arg env).py" output="screen"/>
+    <node name="fast_simulator_object_spawner" pkg="amigo_ed_tutorials" type="spawn_objects_$(arg env).py" output="screen"/>
 
     <!-- spawn amigo -->
     <node pkg="fast_simulator" type="spawn" name="spawn_amigo" args="-i amigo -m amigo -x $(arg robot_init_x) -y $(arg robot_init_y) -Z $(arg robot_init_phi)" output="screen"/>
