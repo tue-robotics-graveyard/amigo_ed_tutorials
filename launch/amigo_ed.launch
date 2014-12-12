@@ -34,8 +34,18 @@
     <!-- fake localization -->
     <node pkg="tf" type="static_transform_publisher" name="tf_fake_localization" args="0 0 0 0 0 0 /map /amigo/odom 20" />
 
+    <!-- RGBD Server -->
+    <node name="rgbd_encoder" pkg="rgbd" type="rgbd_server" output="screen">
+        <remap from="cam_info" to="/amigo/top_kinect/rgb/camera_info"/>
+        <remap from="rgb_image" to="/amigo/top_kinect/rgb/image_color"/>
+	    <remap from="depth_image" to="/amigo/top_kinect/depth_registered/hw_registered/image_rect_raw"/>
+	    <remap from="output" to="/amigo/top_kinect/rgbd"/>
+	    <param name="depth_storage" value="lossless"/>
+	    <param name="rgb_storage" value="lossless"/>
+    </node>
+
     <!-- Run ED -->
     <node name="ed_server" pkg="ed" type="ed_server" args="$(find amigo_ed_tutorials)/config/ed/segmentation.yaml" output="screen" />
- 		
+		
  </launch>
   
