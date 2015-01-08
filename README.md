@@ -7,9 +7,7 @@ This package contains some configuration files that will help you to simulate an
 
 ## Installation
 
-*Note: Currently only ROS Hydro is supported*
-
-We assume you have successfully installed ROS and set-up a Catkin workspace. Check out the following packages in your workspace:
+We assume you have successfully installed ROS (Hydro or Indigo) and set-up a Catkin workspace. Check out the following packages in your workspace:
 
     cd <your_catkin_workspace>/src
 
@@ -31,7 +29,13 @@ We assume you have successfully installed ROS and set-up a Catkin workspace. Che
     
 You will also need the following system dependencies:
 
+For ROS Hydro:
+
     sudo apt-get install ros-hydro-xacro ros-hydro-tf-conversions ros-hydro-image-transport ros-hydro-common-msgs ros-hydro-ros-comm ros-hydro-stereo-msgs ros-hydro-opencv2 ros-hydro-std-msgs ros-hydro-sensor-msgs ros-hydro-visualization-msgs ros-hydro-geometry-msgs ros-hydro-pcl-ros ros-hydro-message-filters ros-hydro-image-geometry ros-hydro-kdl-parser ros-hydro-roslib ros-hydro-std-srvs ros-hydro-navigation yaml-cpp ros-hydro-cv-bridge ros-hydro-tf libassimp-dev ros-hydro-message-generation ros-hydro-roscpp ros-hydro-message-runtime ros-hydro-class-loader ros-hydro-pcl-conversions
+
+For ROS Indigo:
+
+    sudo apt-get install ros-indigo-xacro ros-indigo-tf-conversions ros-indigo-image-transport ros-indigo-common-msgs ros-indigo-ros-comm ros-indigo-stereo-msgs ros-indigo-std-msgs ros-indigo-sensor-msgs ros-indigo-visualization-msgs ros-indigo-geometry-msgs ros-indigo-pcl-ros ros-indigo-message-filters ros-indigo-image-geometry ros-indigo-kdl-parser ros-indigo-roslib ros-indigo-std-srvs ros-indigo-navigation ros-indigo-cv-bridge ros-indigo-tf libassimp-dev ros-indigo-message-generation ros-indigo-roscpp ros-indigo-message-runtime ros-indigo-class-loader ros-indigo-pcl-conversions ros-indigo-robot-state-publisher
     
 This should be sufficient to successfully compile the simulator and ED:
 
